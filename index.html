@@ -89,6 +89,7 @@
         justify-content: space-between;
         gap: var(--space-md);
         padding: var(--space-sm) 0;
+        position: relative;
       }
 
       .brand {
@@ -119,6 +120,44 @@
         gap: 0.35rem;
         flex-wrap: wrap;
         justify-content: flex-end;
+      }
+
+      .nav-toggle {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        border: 1px solid color-mix(in oklab, var(--ink-800) 16%, var(--sand-200));
+        border-radius: 999px;
+        background: color-mix(in oklab, var(--sand-050) 92%, transparent);
+        color: var(--ink-950);
+        cursor: pointer;
+      }
+
+      .nav-toggle-line {
+        width: 18px;
+        height: 2px;
+        border-radius: 999px;
+        background: currentColor;
+        box-shadow: 0 -6px 0 currentColor, 0 6px 0 currentColor;
+        transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
+      }
+
+      .nav-toggle[aria-expanded="true"] .nav-toggle-line {
+        transform: rotate(45deg);
+        box-shadow: 0 0 0 currentColor, 0 0 0 currentColor;
+      }
+
+      .nav-toggle[aria-expanded="true"] .nav-toggle-line::after {
+        content: "";
+        display: block;
+        width: 18px;
+        height: 2px;
+        border-radius: 999px;
+        background: currentColor;
+        transform: rotate(90deg);
       }
 
       .site-nav a {
@@ -214,6 +253,20 @@
         bottom: 8%;
         background: radial-gradient(circle, color-mix(in oklab, var(--copper-500) 26%, transparent), transparent 72%);
         animation: driftOrb 12s var(--ease-out) infinite alternate-reverse;
+      }
+
+      .hero-sheen {
+        position: absolute;
+        inset: -12% -8%;
+        pointer-events: none;
+        opacity: 0.8;
+        background:
+          radial-gradient(45% 38% at 24% 22%, color-mix(in oklab, var(--teal-500) 14%, transparent), transparent 72%),
+          radial-gradient(38% 42% at 78% 70%, color-mix(in oklab, var(--copper-500) 16%, transparent), transparent 70%),
+          linear-gradient(115deg, transparent 28%, color-mix(in oklab, var(--sand-050) 42%, transparent) 48%, transparent 67%);
+        mix-blend-mode: screen;
+        animation: sheenSweep 18s ease-in-out infinite alternate;
+        z-index: -1;
       }
 
       .hero-kicker {
@@ -413,6 +466,20 @@
           linear-gradient(210deg, color-mix(in oklab, var(--teal-500) 10%, transparent), color-mix(in oklab, var(--sand-100) 88%, transparent));
         border: 1px solid color-mix(in oklab, var(--ink-800) 20%, var(--sand-200));
         box-shadow: 0 26px 60px color-mix(in oklab, var(--marine-500) 16%, transparent);
+      }
+
+      .products-shell::before {
+        content: "";
+        position: absolute;
+        inset: -14% -10%;
+        pointer-events: none;
+        background:
+          radial-gradient(38% 44% at 18% 24%, color-mix(in oklab, var(--teal-500) 12%, transparent), transparent 72%),
+          radial-gradient(42% 42% at 82% 72%, color-mix(in oklab, var(--copper-500) 14%, transparent), transparent 70%),
+          linear-gradient(120deg, transparent 26%, color-mix(in oklab, var(--sand-050) 28%, transparent) 50%, transparent 72%);
+        opacity: 0.9;
+        mix-blend-mode: screen;
+        animation: sheenSweep 20s ease-in-out infinite alternate-reverse;
       }
 
       .products-header {
@@ -624,6 +691,21 @@
         }
         to {
           transform: translate3d(-14px, 16px, 0) scale(1.12);
+        }
+      }
+
+      @keyframes sheenSweep {
+        0% {
+          transform: translate3d(-2%, -1%, 0) scale(1);
+          opacity: 0.55;
+        }
+        50% {
+          transform: translate3d(2%, 2%, 0) scale(1.04);
+          opacity: 0.9;
+        }
+        100% {
+          transform: translate3d(5%, -2%, 0) scale(1.02);
+          opacity: 0.65;
         }
       }
 
@@ -912,8 +994,9 @@
         }
 
         .header-inner {
-          flex-direction: column;
-          align-items: flex-start;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
           gap: 0.75rem;
           padding-top: 0.85rem;
           padding-bottom: 0.85rem;
@@ -923,11 +1006,34 @@
           display: none;
         }
 
+        .nav-toggle {
+          display: inline-flex;
+          margin-left: auto;
+        }
+
         .site-nav {
           width: 100%;
+          order: 3;
           display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 0.5rem;
+          grid-template-columns: 1fr;
+          gap: 0.6rem;
+          padding: 0 0 0.25rem;
+          max-height: 0;
+          opacity: 0;
+          overflow: hidden;
+          pointer-events: none;
+          transform: translateY(-8px);
+          transition:
+            max-height 280ms var(--ease-out),
+            opacity 220ms var(--ease-out),
+            transform 220ms var(--ease-out);
+        }
+
+        .site-nav.is-open {
+          max-height: 420px;
+          opacity: 1;
+          pointer-events: auto;
+          transform: translateY(0);
         }
 
         .site-nav a,
@@ -1046,10 +1152,6 @@
           --content-width: min(1120px, calc(100vw - 1rem));
         }
 
-        .site-nav {
-          grid-template-columns: 1fr;
-        }
-
         .hero-kicker,
         .products-kicker,
         .product-tag {
@@ -1103,7 +1205,10 @@
           <span class="brand-mark">HBS</span>
           <span class="brand-copy">Software Consultancy</span>
         </a>
-        <nav class="site-nav" aria-label="Primary">
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu">
+          <span class="nav-toggle-line" aria-hidden="true"></span>
+        </button>
+        <nav class="site-nav" id="primary-nav" aria-label="Primary">
           <a href="#services">Services</a>
           <a href="#products">Products</a>
           <a href="#process">Process</a>
@@ -1115,6 +1220,7 @@
 
     <main id="main-content">
       <section class="hero" id="top">
+        <div class="hero-sheen" aria-hidden="true"></div>
         <div class="hero-text">
           <h1>Software systems built for real operational work.</h1>
           <p class="hero-copy">
@@ -1246,6 +1352,8 @@
     <script>
       const root = document.documentElement;
       const siteHeader = document.querySelector(".site-header");
+      const navToggle = document.querySelector(".nav-toggle");
+      const siteNav = document.querySelector(".site-nav");
       const sections = document.querySelectorAll("main section[id]");
       const navLinks = document.querySelectorAll(".site-nav a[href^='#']");
 
@@ -1256,6 +1364,34 @@
 
       syncHeaderHeight();
       window.addEventListener("resize", syncHeaderHeight);
+
+      const closeMobileNav = () => {
+        if (!navToggle || !siteNav) {
+          return;
+        }
+        navToggle.setAttribute("aria-expanded", "false");
+        navToggle.setAttribute("aria-label", "Open menu");
+        siteNav.classList.remove("is-open");
+      };
+
+      if (navToggle && siteNav) {
+        navToggle.addEventListener("click", () => {
+          const isOpen = navToggle.getAttribute("aria-expanded") === "true";
+          navToggle.setAttribute("aria-expanded", String(!isOpen));
+          navToggle.setAttribute("aria-label", isOpen ? "Open menu" : "Close menu");
+          siteNav.classList.toggle("is-open", !isOpen);
+        });
+
+        siteNav.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", closeMobileNav);
+        });
+
+        window.addEventListener("resize", () => {
+          if (window.innerWidth > 680) {
+            closeMobileNav();
+          }
+        });
+      }
 
       const revealObserver = new IntersectionObserver(
         (entries) => {
