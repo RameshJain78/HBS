@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HBS Consultancy | Web Design, ERP, WMS, Traceability</title>
+    <meta
+      name="description"
+      content="HBS Consultancy builds conversion-focused web design and operational software: ERP, WMS, and traceability applications."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Prata&family=Public+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink-950: oklch(24% 0.03 252);
+        --ink-800: oklch(36% 0.05 250);
+        --sand-050: oklch(97% 0.01 72);
+        --sand-100: oklch(94% 0.015 72);
+        --sand-200: oklch(88% 0.02 72);
+        --copper-500: oklch(66% 0.13 56);
+        --marine-500: oklch(56% 0.12 230);
+        --teal-500: oklch(67% 0.1 185);
+        --alert-500: oklch(64% 0.16 30);
+        --radius-sm: 10px;
+        --radius-md: 18px;
+        --radius-lg: 28px;
+        --space-xs: clamp(0.5rem, 0.4rem + 0.4vw, 0.75rem);
+        --space-sm: clamp(0.75rem, 0.6rem + 0.5vw, 1rem);
+        --space-md: clamp(1rem, 0.7rem + 1vw, 1.5rem);
+        --space-lg: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+        --space-xl: clamp(2rem, 1.2rem + 3vw, 4rem);
+        --content-width: min(1120px, 92vw);
+        --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Public Sans", "Segoe UI", sans-serif;
+        background:
+          radial-gradient(1200px 700px at -10% -10%, color-mix(in oklab, var(--teal-500) 18%, transparent), transparent),
+          radial-gradient(900px 500px at 100% 0%, color-mix(in oklab, var(--copper-500) 22%, transparent), transparent),
+          var(--sand-050);
+        color: var(--ink-950);
+        line-height: 1.6;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: 0.5rem;
+        top: -3rem;
+        padding: 0.5rem 0.8rem;
+        background: var(--ink-950);
+        color: var(--sand-050);
+        border-radius: 8px;
+      }
+
+      .skip-link:focus-visible {
+        top: 0.5rem;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(8px);
+        background-color: color-mix(in oklab, var(--sand-050) 88%, transparent);
+        border-bottom: 1px solid color-mix(in oklab, var(--ink-800) 20%, var(--sand-200));
+      }
+
+      .header-inner {
+        width: var(--content-width);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-md);
+        padding: var(--space-sm) 0;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.65rem;
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .brand-mark {
+        font-family: "Prata", "Times New Roman", serif;
+        font-size: 1.35rem;
+        line-height: 1;
+        letter-spacing: 0.03em;
+      }
+
+      .brand-copy {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--ink-800);
+      }
+
+      .site-nav {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .site-nav a {
+        color: inherit;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 0.42rem 0.7rem;
+        border-radius: 999px;
+        transition: background-color 180ms var(--ease-out), color 180ms var(--ease-out);
+      }
+
+      .site-nav a:hover,
+      .site-nav a:focus-visible {
+        background: color-mix(in oklab, var(--marine-500) 14%, var(--sand-050));
+        outline: none;
+      }
+
+      .site-nav a[aria-current="true"] {
+        background: color-mix(in oklab, var(--marine-500) 20%, var(--sand-100));
+        color: var(--ink-950);
+      }
+
+      .cta-chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.38rem 0.68rem;
+        border-radius: 999px;
+        background: color-mix(in oklab, var(--copper-500) 28%, var(--sand-100));
+        color: var(--ink-950);
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 0.84rem;
+      }
+
+      main {
+        overflow: clip;
+      }
+
+      section {
+        width: var(--content-width);
+        margin: 0 auto;
+      }
+
+      .hero {
+        min-height: min(88svh, 900px);
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: clamp(1.2rem, 2vw, 2.4rem);
+        align-items: center;
+        padding: clamp(2.5rem, 6vw, 5.5rem) 0 clamp(2rem, 4vw, 4rem);
+      }
+
+      .hero-kicker {
+        display: inline-flex;
+        padding: 0.45rem 0.85rem;
+        border: 1px solid color-mix(in oklab, var(--teal-500) 45%, var(--sand-200));
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.15;
+      }
+
+      h1 {
+        margin-top: var(--space-md);
+        max-width: 18ch;
+        font-family: "Prata", "Times New Roman", serif;
+        font-size: clamp(2.15rem, 5vw, 4.45rem);
+        letter-spacing: 0.01em;
+      }
+
+      .hero-copy {
+        margin-top: var(--space-md);
+        max-width: 58ch;
+        color: var(--ink-800);
+      }
+
+      .hero-actions {
+        margin-top: var(--space-lg);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-sm);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45rem;
+        text-decoration: none;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        transition: transform 200ms var(--ease-out), background-color 200ms var(--ease-out), color 200ms var(--ease-out);
+      }
+
+      .btn-primary {
+        background: var(--marine-500);
+        color: var(--sand-050);
+        padding: 0.88rem 1.3rem;
+      }
+
+      .btn-primary:hover,
+      .btn-primary:focus-visible {
+        transform: translateY(-2px);
+        background: color-mix(in oklab, var(--marine-500) 85%, var(--teal-500));
+        outline: none;
+      }
+
+      .btn-secondary {
+        background: color-mix(in oklab, var(--copper-500) 18%, var(--sand-100));
+        color: var(--ink-950);
+        padding: 0.88rem 1.2rem;
+      }
+
+      .btn-secondary:hover,
+      .btn-secondary:focus-visible {
+        transform: translateY(-2px);
+        outline: none;
+        background: color-mix(in oklab, var(--copper-500) 25%, var(--sand-100));
+      }
+
+      .hero-panel {
+        background:
+          linear-gradient(165deg, color-mix(in oklab, var(--teal-500) 22%, var(--sand-100)), color-mix(in oklab, var(--copper-500) 16%, var(--sand-100)));
+        border-radius: var(--radius-lg);
+        padding: clamp(1.2rem, 2.4vw, 2rem);
+        border: 1px solid color-mix(in oklab, var(--ink-800) 20%, var(--sand-200));
+      }
+
+      .hero-panel h2 {
+        font-family: "Prata", "Times New Roman", serif;
+        font-size: clamp(1.2rem, 2.1vw, 1.8rem);
+        margin-bottom: var(--space-md);
+      }
+
+      .hero-panel ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.62rem;
+      }
+
+      .hero-panel li {
+        padding: 0.72rem 0.8rem;
+        border-radius: var(--radius-sm);
+        background: color-mix(in oklab, var(--sand-050) 65%, transparent);
+        border: 1px solid color-mix(in oklab, var(--ink-800) 16%, var(--sand-200));
+        font-size: 0.95rem;
+      }
+
+      .trust {
+        margin-top: var(--space-lg);
+        padding: 1rem clamp(1rem, 2vw, 1.5rem);
+        border-radius: var(--radius-md);
+        background: color-mix(in oklab, var(--sand-100) 80%, var(--teal-500) 12%);
+        border: 1px solid color-mix(in oklab, var(--ink-800) 18%, var(--sand-200));
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem 1.4rem;
+      }
+
+      .trust span {
+        font-weight: 600;
+        font-size: 0.92rem;
+      }
+
+      .section-shell {
+        padding: clamp(2.5rem, 7vw, 5.5rem) 0;
+      }
+
+      .section-title {
+        max-width: 22ch;
+        font-family: "Prata", "Times New Roman", serif;
+        font-size: clamp(1.5rem, 3vw, 2.8rem);
+      }
+
+      .section-intro {
+        max-width: 60ch;
+        margin-top: var(--space-sm);
+        color: var(--ink-800);
+      }
+
+      .services-grid {
+        margin-top: var(--space-lg);
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: var(--space-md);
+      }
+
+      .service-block {
+        border-radius: var(--radius-md);
+        padding: clamp(1rem, 2.5vw, 1.5rem);
+        background: color-mix(in oklab, var(--sand-100) 82%, var(--copper-500) 12%);
+        border: 1px solid color-mix(in oklab, var(--ink-800) 16%, var(--sand-200));
+      }
+
+      .service-block h3 {
+        font-size: 1.15rem;
+      }
+
+      .service-block p {
+        margin: 0.7rem 0 0;
+        color: var(--ink-800);
+      }
+
+      .products-shell {
+        border-radius: var(--radius-lg);
+        padding: clamp(1.2rem, 2.6vw, 2rem);
+        background: color-mix(in oklab, var(--marine-500) 16%, var(--sand-100));
+        border: 1px solid color-mix(in oklab, var(--ink-800) 18%, var(--sand-200));
+      }
+
+      .products-grid {
+        margin-top: var(--space-md);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: var(--space-sm);
+      }
+
+      .product-card {
+        border-radius: var(--radius-sm);
+        padding: 1rem;
+        background: color-mix(in oklab, var(--sand-050) 82%, var(--teal-500) 11%);
+        border: 1px solid color-mix(in oklab, var(--ink-800) 17%, var(--sand-200));
+      }
+
+      .product-card h3 {
+        font-size: 1.1rem;
+      }
+
+      .product-card p {
+        margin-top: 0.55rem;
+        color: var(--ink-800);
+      }
+
+      .timeline {
+        margin-top: var(--space-lg);
+        display: grid;
+        gap: 0.7rem;
+      }
+
+      .timeline-step {
+        display: grid;
+        grid-template-columns: 64px 1fr;
+        gap: 1rem;
+        align-items: start;
+        border-radius: var(--radius-md);
+        padding: 0.9rem;
+        background: color-mix(in oklab, var(--sand-100) 83%, var(--teal-500) 8%);
+        border: 1px solid color-mix(in oklab, var(--ink-800) 16%, var(--sand-200));
+      }
+
+      .timeline-step strong {
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--marine-500);
+        padding-top: 0.2rem;
+      }
+
+      .timeline-step h3 {
+        font-size: 1.02rem;
+      }
+
+      .timeline-step p {
+        margin: 0.35rem 0 0;
+        color: var(--ink-800);
+      }
+
+      .faq-shell {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: var(--space-lg);
+        align-items: start;
+      }
+
+      details {
+        border-radius: var(--radius-sm);
+        background: color-mix(in oklab, var(--sand-100) 85%, var(--copper-500) 10%);
+        border: 1px solid color-mix(in oklab, var(--ink-800) 16%, var(--sand-200));
+        padding: 0.8rem 0.9rem;
+      }
+
+      details + details {
+        margin-top: 0.65rem;
+      }
+
+      summary {
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      summary:focus-visible {
+        outline: 2px solid var(--marine-500);
+        outline-offset: 4px;
+        border-radius: 6px;
+      }
+
+      details p {
+        margin: 0.6rem 0 0.1rem;
+        color: var(--ink-800);
+      }
+
+      .contact-card {
+        border-radius: var(--radius-lg);
+        background: color-mix(in oklab, var(--marine-500) 22%, var(--sand-100));
+        border: 1px solid color-mix(in oklab, var(--ink-800) 18%, var(--sand-200));
+        padding: clamp(1.1rem, 2.4vw, 1.9rem);
+      }
+
+      .contact-card h3 {
+        font-family: "Prata", "Times New Roman", serif;
+        font-size: clamp(1.3rem, 2vw, 1.8rem);
+      }
+
+      .contact-card p {
+        color: var(--ink-800);
+      }
+
+      .contact-mail {
+        display: inline-block;
+        margin-top: var(--space-sm);
+        font-weight: 700;
+        text-decoration: none;
+        color: var(--ink-950);
+        background: color-mix(in oklab, var(--teal-500) 30%, var(--sand-050));
+        border: 1px solid color-mix(in oklab, var(--ink-800) 16%, var(--sand-200));
+        border-radius: var(--radius-sm);
+        padding: 0.7rem 0.9rem;
+      }
+
+      .contact-mail:focus-visible,
+      .contact-mail:hover {
+        outline: none;
+        background: color-mix(in oklab, var(--teal-500) 40%, var(--sand-050));
+      }
+
+      .footer {
+        width: var(--content-width);
+        margin: 0 auto;
+        border-top: 1px solid color-mix(in oklab, var(--ink-800) 22%, var(--sand-200));
+        padding: 1.1rem 0 2rem;
+        color: var(--ink-800);
+        font-size: 0.88rem;
+        display: flex;
+        justify-content: space-between;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(14px);
+        transition: opacity 450ms var(--ease-out), transform 450ms var(--ease-out);
+      }
+
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .hero-text,
+      .hero-panel {
+        opacity: 0;
+      }
+
+      .hero-text {
+        transform: translateY(22px);
+        animation: heroIn 820ms 80ms var(--ease-out) forwards;
+      }
+
+      .hero-panel {
+        transform: translateY(28px);
+        animation: heroIn 900ms 220ms var(--ease-out) forwards;
+      }
+
+      @keyframes heroIn {
+        from {
+          opacity: 0;
+          transform: translateY(22px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .faq-shell,
+        .services-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .site-nav {
+          justify-content: flex-start;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .header-inner {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .brand-copy {
+          display: none;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          animation-duration: 1ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 1ms !important;
+        }
+
+        .hero-text,
+        .hero-panel,
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#top">
+          <span class="brand-mark">HBS</span>
+          <span class="brand-copy">Software Consultancy</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="#services">Services</a>
+          <a href="#products">Products</a>
+          <a href="#process">Process</a>
+          <a href="#contact">Contact</a>
+          <a class="cta-chip" href="mailto:hello@hbsconsultancy.com?subject=Discovery%20Call%20Request">Book a discovery call</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero" id="top">
+        <div class="hero-text">
+          <span class="hero-kicker">Web Design + Operations Software</span>
+          <h1>Build the systems your operations team can trust under pressure.</h1>
+          <p class="hero-copy">
+            HBS designs high-performing websites and delivers operational software with measurable impact: ERP, WMS, and traceability apps that connect teams, reduce delay, and make decisions easier.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:hello@hbsconsultancy.com?subject=Discovery%20Call%20Request">Book a discovery call</a>
+            <a class="btn btn-secondary" href="#products">See product capabilities</a>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-label="Value Highlights">
+          <h2>What clients get with HBS</h2>
+          <ul>
+            <li>Clear solution architecture aligned to your workflow reality.</li>
+            <li>Delivery cadence built for speed without operational disruption.</li>
+            <li>Production-grade quality across UI, data, and process logic.</li>
+            <li>A single accountable partner from design through rollout.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="trust reveal" aria-label="Trust Signals">
+        <span>Scannable proposal paths</span>
+        <span>Fast decision-cycle collaboration</span>
+        <span>WCAG-aware design delivery</span>
+        <span>Email-first discovery workflow</span>
+      </section>
+
+      <section class="section-shell reveal" id="services">
+        <h2 class="section-title">Services that move from direction to deployment.</h2>
+        <p class="section-intro">
+          We keep consulting practical. Every engagement is structured to reduce ambiguity, accelerate build confidence, and improve operational outcomes quickly.
+        </p>
+        <div class="services-grid">
+          <article class="service-block">
+            <h3>Conversion-Focused Web Design</h3>
+            <p>
+              Strategy-led landing and marketing experiences with clear hierarchy, fast mobile performance, and intent-driven user journeys.
+            </p>
+          </article>
+          <article class="service-block">
+            <h3>Consulting + Implementation</h3>
+            <p>
+              Requirement shaping, architecture planning, and execution support across product teams and operations stakeholders.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-shell reveal" id="products">
+        <div class="products-shell">
+          <h2 class="section-title">Operational products built for day-to-day decisions.</h2>
+          <p class="section-intro">
+            Our product line focuses on practical control, data clarity, and workflow reliability across operations.
+          </p>
+          <div class="products-grid">
+            <article class="product-card">
+              <h3>ERP Applications</h3>
+              <p>Unify finance, procurement, and execution data in one accountable operating layer.</p>
+            </article>
+            <article class="product-card">
+              <h3>WMS Platforms</h3>
+              <p>Improve warehouse throughput with real-time inventory, picking, and dispatch visibility.</p>
+            </article>
+            <article class="product-card">
+              <h3>Traceability Systems</h3>
+              <p>Track origin-to-outcome events with reliable logs for quality, compliance, and recall readiness.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-shell reveal" id="process">
+        <h2 class="section-title">A process built to keep momentum visible.</h2>
+        <p class="section-intro">You always know what is being designed, what is being built, and what decision is needed next.</p>
+        <div class="timeline">
+          <article class="timeline-step">
+            <strong>Week 1</strong>
+            <div>
+              <h3>Discovery + Scope Lock</h3>
+              <p>We align business constraints, delivery timeline, and success measures into one execution brief.</p>
+            </div>
+          </article>
+          <article class="timeline-step">
+            <strong>Build</strong>
+            <div>
+              <h3>Design + Engineering Sprints</h3>
+              <p>Iterative releases with direct stakeholder feedback loops, focused on usable increments.</p>
+            </div>
+          </article>
+          <article class="timeline-step">
+            <strong>Launch</strong>
+            <div>
+              <h3>Rollout + Stabilization</h3>
+              <p>Production readiness checks, adoption guidance, and post-go-live adjustments for smooth handover.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-shell reveal faq-shell" id="contact">
+        <div>
+          <h2 class="section-title">Questions before we start?</h2>
+          <p class="section-intro">Quick answers for teams comparing implementation partners right now.</p>
+          <details>
+            <summary>What should I include in my discovery email?</summary>
+            <p>Share your current workflow pain points, desired timeline, and which area matters first: web design, ERP, WMS, or traceability.</p>
+          </details>
+          <details>
+            <summary>Can we start with one module and expand later?</summary>
+            <p>Yes. We can scope an initial phase around one team or process, then scale based on measurable outcomes.</p>
+          </details>
+          <details>
+            <summary>How quickly will we hear back?</summary>
+            <p>You can expect a response within one business day with next-step options and suggested call slots.</p>
+          </details>
+        </div>
+        <aside class="contact-card">
+          <h3>Book your discovery call</h3>
+          <p>Email us directly and we will send a focused agenda before the call so the first conversation is productive from minute one.</p>
+          <a class="contact-mail" href="mailto:hello@hbsconsultancy.com?subject=Discovery%20Call%20Request">
+            hello@hbsconsultancy.com
+          </a>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>HBS Consultancy</span>
+      <span id="year"></span>
+    </footer>
+
+    <script>
+      const sections = document.querySelectorAll("main section[id]");
+      const navLinks = document.querySelectorAll(".site-nav a[href^='#']");
+
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+            }
+          });
+        },
+        { threshold: 0.16 }
+      );
+
+      document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+
+      const navObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+            const id = entry.target.getAttribute("id");
+            navLinks.forEach((link) => {
+              const active = link.getAttribute("href") === `#${id}`;
+              if (active) {
+                link.setAttribute("aria-current", "true");
+              } else {
+                link.removeAttribute("aria-current");
+              }
+            });
+          });
+        },
+        { rootMargin: "-35% 0px -55% 0px", threshold: 0.01 }
+      );
+
+      sections.forEach((section) => navObserver.observe(section));
+
+      document.getElementById("year").textContent = `${new Date().getFullYear()} | Email only onboarding`;
+    </script>
+  </body>
+</html>
